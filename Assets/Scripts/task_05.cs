@@ -9,8 +9,8 @@ public class task_05 : MonoBehaviour
 {
     //Кубы будем распологать по оси X
 
-    public int N = 5;
-    public int i = 0;
+   /* public int N = 5;
+    //public int i = 0;
     private bool Error = false;            //Переменная для того чтобы понять есть ли куб на координате или нет
     private List<int> _usedCoord = new List<int>();
     private void Start()
@@ -37,5 +37,5 @@ public class task_05 : MonoBehaviour
             }
             else i--;
         }
-    }
+    }*/
 }
