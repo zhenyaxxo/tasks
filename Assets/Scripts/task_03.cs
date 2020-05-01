@@ -1,36 +1,39 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class task_03 : MonoBehaviour
 {
-    public int N = 5;
-    private Vector3 _position = new Vector3(0, 0, 0);
-    private int temp = 0; //Переменная чтобы проверить какой объект должен создаваться(куб или сфера);
+    public int N = 5;            //Количество объектов
 
+    [Range(1, 10)] 
+    public float offset = 3f;    //Расстояние между объектами(можно менять в реал тайме)
+    
+    private List<GameObject> _allObj = new List<GameObject>(); //Лист всех всех объектов
     private void Awake()
     {
-        for (int i = 0; i < N; i++)
-        {
-            if (temp == 0)
-            {
-                GameObject Cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
-                Cube.transform.position = new Vector3(_position.x + 3, _position.y, _position.z);
-                _position = new Vector3(Cube.transform.position.x, Cube.transform.position.y,
-                    Cube.transform.position.z);
-                temp = 1;
-                continue;
-            }
+        CreateObj();
+    }
 
-            if (temp == 1)
-            {
-                GameObject Sphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-                Sphere.transform.position = new Vector3(_position.x + 3, _position.y, _position.z);
-                _position = new Vector3(Sphere.transform.position.x, Sphere.transform.position.y,
-                    Sphere.transform.position.z);
-                temp = 0;
-                continue;
-            }
+    void CreateObj()            //Метод для создания объектов P.S. N * 2 потому что у нас должно появиться N кубов и N сфер 
+    {
+        for (int i = 0; i < N * 2; i++)
+        {
+            if (i % 2 == 0) _allObj.Add(GameObject.CreatePrimitive(PrimitiveType.Cube));
+            else            _allObj.Add(GameObject.CreatePrimitive(PrimitiveType.Sphere));
         }
+    }
+
+    void ChangePosition()    //Метод для изменения позиции всех обьектов
+    {
+        for (int i = 0; i < _allObj.Count; i++) 
+        {
+            _allObj[i].transform.position = Vector3.forward * i * offset;
+        }
+    }
+    private void Update()
+    {
+        ChangePosition();    //Этот метод вызывается для изменения позиции в реал тайме
     }
 }
