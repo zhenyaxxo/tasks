@@ -7,35 +7,59 @@ using Random = UnityEngine.Random;
 
 public class task_05 : MonoBehaviour
 {
-    //Кубы будем распологать по оси X
+    public int N = 5;
+    public List<GameObject> _cubes = new List<GameObject>();
 
-   /* public int N = 5;
-    //public int i = 0;
-    private bool Error = false;            //Переменная для того чтобы понять есть ли куб на координате или нет
-    private List<int> _usedCoord = new List<int>();
-    private void Start()
+    private void Awake()
     {
-        for (; i < N; i++)
-        {
-            int x = Random.Range(0, N * 2);
-            for (int j = 0; j < _usedCoord.Count; j++)
-            {
-                if (_usedCoord[j] == x)
-                {
-                    Error = true;
-                    break;
-                }
-                else Error = false;
-            }
+        CreateObjects();
+        sortObjects();
+    }
 
-            if (Error == false)           //Если такой координаты нет в листе, то тогда создай куб, если есть, то пройди еще раз цикл с тем же значением i
+    void CreateObjects()
+    {
+        for (int i = 0; i < N; i++)
+        {
+            GameObject obj = GameObject.CreatePrimitive(PrimitiveType.Cube);
+            do
             {
-                Vector3 temp = new Vector3(x, 0, 0);
-                GameObject Cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
-                Cube.transform.position = temp;
-                _usedCoord.Add(x);
-            }
-            else i--;
+                obj.transform.position = setRandomPosition();
+            } while (checkPosition(obj.transform.position.x));
+            _cubes.Add(obj);
         }
-    }*/
+    }
+
+    bool checkPosition(float _position)
+    {
+        foreach (var obj in _cubes)
+        {
+            if (obj.transform.position.x == _position)
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+    
+    Vector3 setRandomPosition()
+    {
+        return new Vector3(Random.Range(0, N * 2), 0, Random.Range(0, N * 2));
+    }
+
+    void sortObjects()
+    {
+        for (int i = 1; i < _cubes.Count; i++)
+        {
+            for (int j = i; j > 0; j--)
+            {
+                if(_cubes[j].transform.position.x < _cubes[j-1].transform.position.x)
+                {
+                    var temp = _cubes[j];
+                    _cubes[j] = _cubes[j - 1];
+                    _cubes[j - 1] = temp;
+                }
+            }
+        }
+    }
 }
