@@ -5,15 +5,24 @@ using UnityEngine;
 
 public class task_02 : MonoBehaviour
 {
-    public int N = 1;
-    private Vector3 _position = new Vector3(0, 0, 0);
+    public int N = 3;
+    [Range(1, 10)] 
+    public float offset = 3f;
+
+    private List<Transform> cubeList = new List<Transform>();
     private void Awake()
     {
-        for (int i = 0; i < N; i++)
+        for (int i = 0; i < N; i++)                    //Создаем кубы и забираем его trasform в наш лист
         {
-            GameObject Cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
-            Cube.transform.position = new Vector3(_position.x + 3, _position.y, _position.z);
-            _position = new Vector3(Cube.transform.position.x, Cube.transform.position.y, Cube.transform.position.z);
+            cubeList.Add(GameObject.CreatePrimitive(PrimitiveType.Cube).transform);
+        }
+    }
+
+    private void Update()
+    {
+        for (int i = 0; i < cubeList.Count; i++)
+        {
+            cubeList[i].position = Vector3.forward * i * offset;
         }
     }
 }

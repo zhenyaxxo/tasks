@@ -142,6 +142,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   N: 3
+  offset: 1
 --- !u!4 &892095558
 Transform:
   m_ObjectHideFlags: 0
