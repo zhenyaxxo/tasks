@@ -39,6 +39,10 @@ public class task_07 : MonoBehaviour
         {
             for (int j = 0; j < 10; j++)
             {
+                if (i == j)
+                {
+                    _cubes[i, j].transform.Rotate(Vector3.right * (Time.deltaTime * speed));
+                }
                 if (j < i)
                 {
                     _cubes[i, j].transform.Rotate(Vector3.up * (Time.deltaTime * speed));
